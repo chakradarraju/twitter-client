@@ -10,18 +10,12 @@ Hash.prototype.getHTMLNode = function() {
     return this.createHTMLNode();
 }
 
-var bind = function(fn, con) {
-    return function() {
-        fn.apply(con, arguments);
-    }
-}
-
 Hash.prototype.createHTMLNode = function() {
     var node = document.createElement('li');
     var link = document.createElement('a');
-    link.addEventListener("click", bind(function(e) {
-        tweetlist.hashlist.showHash(this.hash);
-    }, this));
+    link.addEventListener("click", function(e) {
+        tweetlist.hashlist.showHash(this.innerHTML);
+    });
     if(this.hash == null)
         link.innerHTML = "All";
     else
@@ -32,8 +26,13 @@ Hash.prototype.createHTMLNode = function() {
 }
 
 Hash.prototype.registerTweet = function(tweet) {
-    var hash = tweet.getHash();
-    if(hash != this.hash)
+    var hashes = tweet.getHashes();
+    var found = false;
+    for(var i=0;i<hashes.length;i++) {
+        if(hashes[i] == this.hash)
+            found = true;
+    }
+    if(!found)
         return;
     this.list.push(tweet);
 }

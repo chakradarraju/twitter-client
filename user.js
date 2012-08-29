@@ -17,7 +17,7 @@ User.prototype.createHTMLNode = function() {
     checkbox.type = "checkbox";
     checkbox.id = "checkbox_"+this.userid;
     checkbox.checked = true;
-    checkbox.addEventListener("click",this.onclick);
+    checkbox.addEventListener("click", this.onclick);
     node.className = " active";
     node.appendChild(checkbox);
     node.appendChild(document.createTextNode(this.userid));
