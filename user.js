@@ -11,13 +11,20 @@ User.prototype.getHTMLNode = function() {
     return this.createHTMLNode();
 };
 
+var bind = function(fn, con) {
+    return function() {
+        fn.apply(con, arguments);
+    }
+}
+
 User.prototype.createHTMLNode = function() {
     var node = document.createElement('li');
     var checkbox = document.createElement('input');
     checkbox.type = "checkbox";
-    checkbox.id = "checkbox_"+this.userid;
     checkbox.checked = true;
-    checkbox.addEventListener("click", this.onclick);
+    checkbox.addEventListener("click", bind(function(e) {
+        this.onclick();
+    }, this));
     node.className = " active";
     node.appendChild(checkbox);
     node.appendChild(document.createTextNode(this.userid));
@@ -27,13 +34,11 @@ User.prototype.createHTMLNode = function() {
 }
 
 User.prototype.onclick = function() {
-    var clickedUserid = this.id.substr(9);
-    var clickedUser = userlist.getUser(clickedUserid);
-    clickedUser.display = this.checked;
-    if(this.checked) {
-        clickedUser.show();
+    var selected = this.node.firstChild.checked;
+    if(selected) {
+        this.show();
     } else {
-        clickedUser.hide();
+        this.hide();
     }
 };
 
