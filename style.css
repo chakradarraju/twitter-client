@@ -1,0 +1,29 @@
+.tweet {
+    margin: 10px;
+    display: none;
+}
+.tweet.active {
+    display: block;
+}
+#userList li.active {
+    color: black;
+}
+#userList li {
+    color: gray;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#hashContainer ul {
+    display: none;
+}
+#hashContainer:hover ul {
+    display: block;
+}
+#hashList {
+    margin: 0px;
+    background: rgba(255,255,255,0.9);
+    position: absolute;
+}
