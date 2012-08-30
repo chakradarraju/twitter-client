@@ -1,7 +1,8 @@
 function Tweet(tweet, user) {
-    this.tweet = tweet;
+    this.tweetData = tweet;
     this.user = user;
     this.node = this.getHTMLNode();
+    this.hashes = this.getHashes();
 }
 
 Tweet.prototype.getHTMLNode = function() {
@@ -15,19 +16,19 @@ Tweet.prototype.createHTMLNode = function() {
     node.className = "tweet active";
     node.appendChild(document.createTextNode(this.tweetInfo()));
     node.appendChild(document.createElement('br'));
-    node.appendChild(this.getTweet());
+    node.appendChild(this.getTweetTextNode());
     return node;
 }
 
-Tweet.prototype.getTweet = function() {
-    var words = this.tweet.text.split(" ");
+Tweet.prototype.getTweetTextNode = function() {
+    var words = this.tweetData.text.split(" ");
     var node = document.createElement('span');
     for(var i=0;i<words.length;i++) {
         var word = words[i];
         if(word.indexOf("#") == 0) {
             var link = document.createElement('a');
             link.addEventListener("click", function(e) {
-                hashlist.showHash(this.innerHTML);
+                twitter.hashlist.showHash(this.innerHTML);
             });
             link.innerHTML = word;
             link.href = "javascript:void(0);"
@@ -40,7 +41,9 @@ Tweet.prototype.getTweet = function() {
 }
 
 Tweet.prototype.getHashes = function() {
-    var words = this.tweet.text.split(" ");
+    if(this.hashes != null)
+        return this.hashes;
+    var words = this.tweetData.text.split(" ");
     var hashes = [];
     for(var i=0;i<words.length;i++) {
         var word = words[i];
@@ -51,7 +54,7 @@ Tweet.prototype.getHashes = function() {
 }
 
 Tweet.prototype.tweetInfo = function() {
-    return "Tweet by: "+this.user.userid+" Tweeted at: "+this.tweet.created_at.substr(0,19);
+    return "Tweet by: "+this.user.userid+" Tweeted at: "+this.tweetData.created_at.substr(0,19);
 }
 
 Tweet.prototype.show = function() {
@@ -66,10 +69,14 @@ Tweet.prototype.hide = function() {
 Tweet.prototype.containsHash = function(hash) {
     if(hash.indexOf("#") != 0)
         return false;
-    var words = this.tweet.text.split(" ");
-    for(var i=0;i<words.length;i++) {
-        if(words[i] == hash)
+    var hashes = this.getHashes();
+    for(var i=0;i<hashes.length;i++) {
+        if(hashes[i] == hash)
             return true;
     }
     return false;
+}
+
+Tweet.prototype.createdAt = function() {
+    return new Date(this.tweetData.created_at);
 }

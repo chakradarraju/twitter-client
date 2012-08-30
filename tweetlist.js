@@ -28,7 +28,7 @@ Tweetlist.prototype.addTweets = function(tweets) {
 }
 
 Tweetlist.prototype.sortTweets = function() {
-    this.list.sort(function(a,b) { return new Date(b.tweet.created_at) - new Date(a.tweet.created_at); });
+    this.list.sort(function(a,b) { return b.createdAt() - a.createdAt(); });
 };
 
 Tweetlist.prototype.refreshList = function() {

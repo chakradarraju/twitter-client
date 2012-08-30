@@ -5,10 +5,10 @@
 .tweet.active {
     display: block;
 }
-#userList li.active {
+#twitter.userlist li.active {
     color: black;
 }
-#userList li {
+#twitter.userlist li {
     color: gray;
 }
 ul {

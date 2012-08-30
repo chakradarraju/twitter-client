@@ -35,14 +35,14 @@ User.prototype.onclick = function() {
 
 User.prototype.show = function() {
     this.display = true;
-    userlist.showing(this); // Should userlist listen to this(prototype) method?
+    twitter.userlist.showing(this); // Should userlist listen to this(prototype) method?
     if(!this.node.className.match(/\bactive\b/))
         this.node.className += "active";
 }
 
 User.prototype.hide = function() {
     this.display = false;
-    userlist.hiding(this);
+    twitter.userlist.hiding(this);
     this.node.className = this.node.className.replace(/\bactive\b/,'');
 }
 
@@ -57,6 +57,6 @@ User.prototype.receiveTweets = function(data) {
     }
     for(var i=0;i<tweets.length;i++)
         this.tweets.push(new Tweet(tweets[i],this));
-    tweetlist.addTweets(this.tweets);
+    twitter.tweetlist.addTweets(this.tweets);
     this.node.removeChild(this.node.lastChild); // Removing (Fetching tweets...)
 };

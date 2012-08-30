@@ -1,15 +1,12 @@
-tweetlist = null;
-hashlist = null;
-userlist = null;
-addUser = null;
+twitter = {};
 window.onload = function() {
-    userlist = new Userlist();
-    tweetlist = new Tweetlist();
-    hashlist = new Hashlist();
-    addUser = new AddUser();
-    filter = new Filter();
-    document.getElementById("userListContainer").appendChild(userlist.getHTMLNode());
-    document.getElementById("tweetListContainer").appendChild(tweetlist.getHTMLNode());
-    document.getElementById("addUserContainer").appendChild(addUser.getHTMLNode());
-    document.getElementById("hashContainer").appendChild(hashlist.getHTMLNode());
+    twitter.userlist = new Userlist();
+    twitter.tweetlist = new Tweetlist();
+    twitter.hashlist = new Hashlist();
+    var searchBox = new SearchBox();
+    var filter = new Filter();
+    document.getElementById("userListContainer").appendChild(twitter.userlist.getHTMLNode());
+    document.getElementById("tweetListContainer").appendChild(twitter.tweetlist.getHTMLNode());
+    document.getElementById("addUserContainer").appendChild(searchBox.getHTMLNode());
+    document.getElementById("hashContainer").appendChild(twitter.hashlist.getHTMLNode());
 }

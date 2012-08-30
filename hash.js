@@ -15,13 +15,12 @@ Hash.prototype.createHTMLNode = function() {
     var node = document.createElement('li');
     var link = document.createElement('a');
     link.addEventListener("click", function(e) {
-        hashlist.showHash(this.innerHTML);
+        twitter.hashlist.showHash(this.innerHTML);
     });
     if(this.hash == null)
         link.innerHTML = "All";
     else
         link.innerHTML = this.hash;
-//    link.href = "javascript:void(0);";
     this.lengthCounter = document.createElement('span');
     this.lengthCounter.innerHTML = this.list.length;
     node.appendChild(link);

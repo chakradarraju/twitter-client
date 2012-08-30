@@ -5,7 +5,7 @@ function Hashlist() {
     this.selectedHashElement = null;
     this.node = this.getHTMLNode();
     this.registerHash(null);
-    Util.connect(tweetlist,"addTweet",this,"registerTweet");
+    Util.connect(twitter.tweetlist,"addTweet",this,"registerTweet");
 }
 
 Hashlist.prototype.getHTMLNode = function() {
