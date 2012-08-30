@@ -2,6 +2,7 @@ function User(userid) {
     this.userid = userid;
     this.display = true;
     this.tweets = [];
+    this.checkbox = null;
     this.node = this.getHTMLNode();
 }
 
@@ -11,50 +12,38 @@ User.prototype.getHTMLNode = function() {
     return this.createHTMLNode();
 };
 
-var bind = function(fn, con) {
-    return function() {
-        fn.apply(con, arguments);
-    }
-}
-
 User.prototype.createHTMLNode = function() {
     var node = document.createElement('li');
     var checkbox = document.createElement('input');
     checkbox.type = "checkbox";
     checkbox.checked = true;
-    checkbox.addEventListener("click", bind(function(e) {
+    checkbox.addEventListener("click", Util.bind(function(e) {
         this.onclick();
     }, this));
     node.className = " active";
     node.appendChild(checkbox);
     node.appendChild(document.createTextNode(this.userid));
     node.appendChild(document.createTextNode(" (Fetching tweets...)"));
+    this.checkbox = checkbox;
     this.node = node;
     return node;
 }
 
 User.prototype.onclick = function() {
-    var selected = this.node.firstChild.checked;
-    if(selected) {
-        this.show();
-    } else {
-        this.hide();
-    }
+    this[this.checkbox.checked ? "show" : "hide"]();
 };
 
 User.prototype.show = function() {
+    this.display = true;
+    userlist.showing(this); // Should userlist listen to this(prototype) method?
     if(!this.node.className.match(/\bactive\b/))
         this.node.className += "active";
-    this.tweets.forEach(function(tweet) {
-        tweet.show();
-    });
 }
 
 User.prototype.hide = function() {
+    this.display = false;
+    userlist.hiding(this);
     this.node.className = this.node.className.replace(/\bactive\b/,'');
-    this.tweets.forEach(function(tweet) {
-        tweet.hide();
-    });
 }
 
 User.prototype.fetchTweets = function() {
@@ -66,12 +55,8 @@ User.prototype.receiveTweets = function(data) {
     if(data.length == 0) {
         alert("User doesn't have any tweets");
     }
-    for(var i=0;i<tweets.length;i++) {
-        var tweetObj = new Tweet(tweets[i],this);
-        this.tweets.push(tweetObj);
-        tweetlist.addTweet(tweetObj);
-    }
-    tweetlist.sort();
-    tweetlist.refreshList();
-    this.node.removeChild(this.node.lastChild);
+    for(var i=0;i<tweets.length;i++)
+        this.tweets.push(new Tweet(tweets[i],this));
+    tweetlist.addTweets(this.tweets);
+    this.node.removeChild(this.node.lastChild); // Removing (Fetching tweets...)
 };

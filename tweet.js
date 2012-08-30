@@ -1,7 +1,7 @@
 function Tweet(tweet, user) {
     this.tweet = tweet;
     this.user = user;
-    this.node = null;
+    this.node = this.getHTMLNode();
 }
 
 Tweet.prototype.getHTMLNode = function() {
@@ -16,7 +16,6 @@ Tweet.prototype.createHTMLNode = function() {
     node.appendChild(document.createTextNode(this.tweetInfo()));
     node.appendChild(document.createElement('br'));
     node.appendChild(this.getTweet());
-    this.node = node;
     return node;
 }
 
@@ -28,7 +27,7 @@ Tweet.prototype.getTweet = function() {
         if(word.indexOf("#") == 0) {
             var link = document.createElement('a');
             link.addEventListener("click", function(e) {
-                tweetlist.hashlist.showHash(this.innerHTML);
+                hashlist.showHash(this.innerHTML);
             });
             link.innerHTML = word;
             link.href = "javascript:void(0);"
@@ -41,8 +40,7 @@ Tweet.prototype.getTweet = function() {
 }
 
 Tweet.prototype.getHashes = function() {
-    var text = this.tweet.text;
-    var words = text.split(" ");
+    var words = this.tweet.text.split(" ");
     var hashes = [];
     for(var i=0;i<words.length;i++) {
         var word = words[i];
@@ -63,4 +61,15 @@ Tweet.prototype.show = function() {
 
 Tweet.prototype.hide = function() {
     this.node.className = this.node.className.replace(/\bactive\b/,'');
+}
+
+Tweet.prototype.containsHash = function(hash) {
+    if(hash.indexOf("#") != 0)
+        return false;
+    var words = this.tweet.text.split(" ");
+    for(var i=0;i<words.length;i++) {
+        if(words[i] == hash)
+            return true;
+    }
+    return false;
 }

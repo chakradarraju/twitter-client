@@ -22,3 +22,20 @@ var MyAjax = (function() {
         }
     };
 })();
+
+var Util = (function() {
+    return {
+        connect: function(source, sourceFn, target, targetFn) {
+            var existing = source[sourceFn];
+            source[sourceFn] = function() {
+                existing.apply(source,arguments);
+                target[targetFn].apply(target,arguments);
+            }
+        },
+        bind: function(fn, con) {
+            return function() {
+                fn.apply(con, arguments);
+            }
+        }
+    }
+})();

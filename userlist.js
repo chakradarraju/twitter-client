@@ -1,10 +1,18 @@
 function Userlist() {
     this.list = {};
-    this.node = document.getElementById('userList');
+    this.node = this.getHTMLNode();
+}
+
+Userlist.prototype.getHTMLNode = function() {
+    return (this.node || this.createHTMLNode());
+}
+
+Userlist.prototype.createHTMLNode = function() {
+    return document.createElement('div');
 }
 
 Userlist.prototype.addToList = function(user) {
-    if(this.getUser(user.userid) != null) {
+    if(this.getUser(user.userid)) {
         alert("User already in list");
         return;
     }
@@ -16,3 +24,11 @@ Userlist.prototype.addToList = function(user) {
 Userlist.prototype.getUser = function(userid) {
     return this.list[userid];
 };
+
+Userlist.prototype.showing = function(user) {
+    return;
+}
+
+Userlist.prototype.hiding = function(user) {
+    return;
+}

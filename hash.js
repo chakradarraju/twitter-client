@@ -1,7 +1,8 @@
 function Hash(hash) {
     this.hash = hash;
-    this.node = this.getHTMLNode();
     this.list = [];
+    this.lengthCounter =null;
+    this.node = this.getHTMLNode();
 }
 
 Hash.prototype.getHTMLNode = function() {
@@ -14,13 +15,19 @@ Hash.prototype.createHTMLNode = function() {
     var node = document.createElement('li');
     var link = document.createElement('a');
     link.addEventListener("click", function(e) {
-        tweetlist.hashlist.showHash(this.innerHTML);
+        hashlist.showHash(this.innerHTML);
     });
     if(this.hash == null)
         link.innerHTML = "All";
     else
         link.innerHTML = this.hash;
+//    link.href = "javascript:void(0);";
+    this.lengthCounter = document.createElement('span');
+    this.lengthCounter.innerHTML = this.list.length;
     node.appendChild(link);
+    node.appendChild(document.createTextNode(" ("));
+    node.appendChild(this.lengthCounter);
+    node.appendChild(document.createTextNode(")"));
     this.node = node;
     return node;
 }
@@ -32,9 +39,10 @@ Hash.prototype.registerTweet = function(tweet) {
         if(hashes[i] == this.hash)
             found = true;
     }
-    if(!found)
+    if(!found && this.hash != null)
         return;
     this.list.push(tweet);
+    this.lengthCounter.innerHTML = this.list.length;
 }
 
 Hash.prototype.getTweets = function() {
