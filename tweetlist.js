@@ -1,7 +1,7 @@
 function Tweetlist() {
     this.list = [];
     this.node = document.getElementById("tweetList");
-    Util.connect(User.prototype,"receiveTweets",this,"receiveTweets");
+    Util.pubsub.subscribe("newTweetsReceived",this.receiveTweets,this);
 }
 
 Tweetlist.prototype.getHTMLNode = function() {
@@ -17,8 +17,7 @@ Tweetlist.prototype.createHTMLNode = function() {
     return node;
 }
 
-Tweetlist.prototype.receiveTweets = function(data) {
-    var tweets = JSON.parse(data);
+Tweetlist.prototype.receiveTweets = function(tweets) {
     if(tweets.length == 0) {
         alert("User doesn't have any tweets");
     }
@@ -30,26 +29,28 @@ Tweetlist.prototype.receiveTweets = function(data) {
 }
 
 Tweetlist.prototype.addTweet = function(tweet) {
-    this.list.push(tweet);
+    var last = this.list.length-1;
+    var lo = 0, hi = last;
+    while(lo<hi) {
+        var md = parseInt((hi+lo)/2);
+        if(tweet.isTweetOlder(this.list[md]))
+            hi = md;
+        else
+            lo = md+1;
+    }
+    if(this.list.length == 0 ||(lo == last && this.list[last].isTweetOlder(tweet))) {
+        this.node.appendChild(tweet.getHTMLNode());
+        this.list.push(tweet);
+    } else {
+        this.node.insertBefore(tweet.getHTMLNode(),this.list[lo].getHTMLNode());
+        this.list.splice(lo,0,tweet);
+    }
 };
 
 Tweetlist.prototype.addTweets = function(tweets) {
     for(var i=0;i<tweets.length;i++)
         this.addTweet(tweets[i]);
-    this.sortTweets();
-    this.refreshList();
 }
-
-Tweetlist.prototype.sortTweets = function() {
-    this.list.sort(function(a,b) { return b.createdAt() - a.createdAt(); });
-};
-
-Tweetlist.prototype.refreshList = function() {
-    this.node.innerHTML = "";
-    for(var i=0;i<this.list.length;i++) {
-        this.node.appendChild(this.list[i].getHTMLNode());
-    }
-};
 
 Tweetlist.prototype.getTweets = function() {
     return this.list;

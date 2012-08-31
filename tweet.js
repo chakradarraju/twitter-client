@@ -9,7 +9,7 @@ Tweet.prototype.getHTMLNode = function() {
     if(this.node != null)
         return this.node;
     return this.createHTMLNode();
-}
+};
 
 Tweet.prototype.createHTMLNode = function() {
     var node = document.createElement('div');
@@ -18,7 +18,7 @@ Tweet.prototype.createHTMLNode = function() {
     node.appendChild(document.createElement('br'));
     node.appendChild(this.getTweetTextNode());
     return node;
-}
+};
 
 Tweet.prototype.getTweetTextNode = function() {
     var words = this.tweetData.text.split(" ");
@@ -38,7 +38,7 @@ Tweet.prototype.getTweetTextNode = function() {
             node.appendChild(document.createTextNode(word+" "));
     }
     return node;
-}
+};
 
 Tweet.prototype.getHashes = function() {
     if(this.hashes != null)
@@ -51,20 +51,24 @@ Tweet.prototype.getHashes = function() {
             hashes.push(word);
     }
     return hashes;
+};
+
+Tweet.prototype.isTweetOlder = function(tweet) {
+    return tweet.createdAt() < this.createdAt();
 }
 
 Tweet.prototype.tweetInfo = function() {
     return "Tweet by: "+this.user.userid+" Tweeted at: "+this.tweetData.created_at.substr(0,19);
-}
+};
 
 Tweet.prototype.show = function() {
     if(!this.node.className.match(/\bactive\b/))
         this.node.className += " active";
-}
+};
 
 Tweet.prototype.hide = function() {
     this.node.className = this.node.className.replace(/\bactive\b/,'');
-}
+};
 
 Tweet.prototype.containsHash = function(hash) {
     if(hash.indexOf("#") != 0)
@@ -75,8 +79,8 @@ Tweet.prototype.containsHash = function(hash) {
             return true;
     }
     return false;
-}
+};
 
 Tweet.prototype.createdAt = function() {
     return new Date(this.tweetData.created_at);
-}
+};

@@ -15,7 +15,7 @@ SearchBox.prototype.createHTMLNode = function() {
     var inputElement = document.createElement('input');
     node.appendChild(inputElement);
     node.addEventListener("submit",function(e) {
-        twitter.userlist.newUser(inputElement.value);
+        twitter.userlist.addNewUser(inputElement.value);
         inputElement.value = "";
         e.preventDefault();
     });

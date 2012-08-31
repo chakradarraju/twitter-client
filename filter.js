@@ -1,10 +1,10 @@
 var Filter = function() {
     this.selectedUsers = {};
     this.selectedHash = null;
-    Util.connect(twitter.userlist,"showing",this,"showUser");
-    Util.connect(twitter.userlist,"hiding",this,"hideUser");
+    Util.connect(twitter.userlist,"onShow",this,"showUser");
+    Util.connect(twitter.userlist,"onHide",this,"hideUser");
     Util.connect(twitter.hashlist,"showHash",this,"selectedHashChange");
-    Util.connect(twitter.tweetlist,"refreshList",this,"filter");
+    Util.connect(twitter.tweetlist,"addTweets",this,"filter");
 }
 
 Filter.prototype.tweetFilter = function(tweet) {

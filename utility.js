@@ -1,4 +1,4 @@
-var MyAjax = (function() {
+var Util = (function() {
     var ajax = function(url, object, callback, method, caller) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -14,17 +14,6 @@ var MyAjax = (function() {
         xmlhttp.send();
     };
     return {
-        get: function(url, object, callback, caller) {
-            ajax(url, object, callback, "GET", caller);
-        },
-        post: function(url, object, callback, caller) {
-            ajax(url, object, callback, "POST", caller);
-        }
-    };
-})();
-
-var Util = (function() {
-    return {
         connect: function(source, sourceFn, target, targetFn) {
             var existing = source[sourceFn];
             source[sourceFn] = function() {
@@ -36,6 +25,27 @@ var Util = (function() {
             return function() {
                 fn.apply(con, arguments);
             }
-        }
+        },
+        ajaxGet: function(url, object, callback, caller) {
+            ajax(url, object, callback, "GET", caller);
+        },
+        ajaxPost: function(url, object, callback, caller) {
+            ajax(url, object, callback, "POST", caller);
+        },
+        pubsub: (function() {
+            var listeners = {};
+            return {
+                subscribe: function(event, fn, cont) {
+                    if(!listeners[event])
+                        listeners[event] = [];
+                    listeners[event].push({func:fn,context:cont});
+                },
+                publish: function(event, message) {
+                    listeners[event].forEach(function(subscriber) {
+                        subscriber.func.apply(subscriber.context,[message]);
+                    });
+                }
+            }
+        })()
     }
 })();
