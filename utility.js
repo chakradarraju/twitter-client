@@ -28,7 +28,7 @@ var Util = (function() {
         connect: function(source, sourceFn, target, targetFn) {
             var existing = source[sourceFn];
             source[sourceFn] = function() {
-                existing.apply(source,arguments);
+                existing.apply(this,arguments);
                 target[targetFn].apply(target,arguments);
             }
         },

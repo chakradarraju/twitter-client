@@ -4,7 +4,7 @@ window.onload = function() {
     twitter.tweetlist = new Tweetlist();
     twitter.hashlist = new Hashlist();
     var searchBox = new SearchBox();
-    var filter = new Filter();
+    twitter.filter = new Filter();
     document.getElementById("userListContainer").appendChild(twitter.userlist.getHTMLNode());
     document.getElementById("tweetListContainer").appendChild(twitter.tweetlist.getHTMLNode());
     document.getElementById("addUserContainer").appendChild(searchBox.getHTMLNode());

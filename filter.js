@@ -7,11 +7,15 @@ var Filter = function() {
     Util.connect(twitter.tweetlist,"refreshList",this,"filter");
 }
 
+Filter.prototype.tweetFilter = function(tweet) {
+    return tweet.user.display && (!this.selectedHash || tweet.containsHash(this.selectedHash));
+}
+
 Filter.prototype.filter = function() {
     var tweets = twitter.tweetlist.getTweets();
     for(var i=0;i<tweets.length;i++) {
         var tweet = tweets[i];
-        if(tweet.user.display && (!this.selectedHash || tweet.containsHash(this.selectedHash)))
+        if(this.tweetFilter(tweet))
             tweet.show();
         else
             tweet.hide();

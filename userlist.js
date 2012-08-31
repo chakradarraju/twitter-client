@@ -11,11 +11,15 @@ Userlist.prototype.createHTMLNode = function() {
     return document.createElement('div');
 }
 
-Userlist.prototype.addToList = function(user) {
-    if(this.getUser(user.userid)) {
+Userlist.prototype.newUser = function(userid) {
+    if(this.getUser(userid)) {
         alert("User already in list");
         return;
     }
+    this.addToList(new User(userid));
+}
+
+Userlist.prototype.addToList = function(user) {
     this.list[user.userid] = user;
     this.node.appendChild(user.getHTMLNode());
     user.fetchTweets();

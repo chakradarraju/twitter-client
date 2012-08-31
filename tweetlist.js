@@ -1,6 +1,7 @@
 function Tweetlist() {
     this.list = [];
     this.node = document.getElementById("tweetList");
+    Util.connect(User.prototype,"receiveTweets",this,"receiveTweets");
 }
 
 Tweetlist.prototype.getHTMLNode = function() {
@@ -14,6 +15,18 @@ Tweetlist.prototype.getHTMLNode = function() {
 Tweetlist.prototype.createHTMLNode = function() {
     var node = document.createElement('ul');
     return node;
+}
+
+Tweetlist.prototype.receiveTweets = function(data) {
+    var tweets = JSON.parse(data);
+    if(tweets.length == 0) {
+        alert("User doesn't have any tweets");
+    }
+    var userid = tweets[0].user.screen_name;
+    var user = twitter.userlist.getUser(userid);
+    for(var i=0;i<tweets.length;i++)
+        user.putTweet(new Tweet(tweets[i],user));
+    this.addTweets(user.getTweets());
 }
 
 Tweetlist.prototype.addTweet = function(tweet) {

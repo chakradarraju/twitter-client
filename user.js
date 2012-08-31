@@ -51,12 +51,13 @@ User.prototype.fetchTweets = function() {
 };
 
 User.prototype.receiveTweets = function(data) {
-    var tweets = JSON.parse(data);
-    if(data.length == 0) {
-        alert("User doesn't have any tweets");
-    }
-    for(var i=0;i<tweets.length;i++)
-        this.tweets.push(new Tweet(tweets[i],this));
-    twitter.tweetlist.addTweets(this.tweets);
     this.node.removeChild(this.node.lastChild); // Removing (Fetching tweets...)
+};
+
+User.prototype.putTweet = function(tweet) {
+    this.tweets.push(tweet);
+};
+
+User.prototype.getTweets = function() {
+    return this.tweets;
 };
