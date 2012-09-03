@@ -13,11 +13,9 @@ User.prototype.getHTMLNode = function() {
 User.prototype.createHTMLNode = function() {
     var node = document.createElement('li');
     var checkbox = document.createElement('input');
+    this.initClickHandler(checkbox);
     checkbox.type = "checkbox";
     checkbox.checked = true;
-    checkbox.addEventListener("click", Util.bind(function(e) {
-        this.onclick();
-    }, this));
     node.className = " active";
     node.appendChild(checkbox);
     node.appendChild(document.createTextNode(this.userid));
@@ -25,6 +23,12 @@ User.prototype.createHTMLNode = function() {
     this.checkbox = checkbox;
     this.node = node;
     return node;
+}
+
+User.prototype.initClickHandler = function(domelement) {
+    domelement.addEventListener("click", Util.bind(function(e) {
+        this.onclick();
+    }, this));
 }
 
 User.prototype.onclick = function() {

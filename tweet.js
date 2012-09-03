@@ -25,9 +25,7 @@ Tweet.prototype.getTweetTextNode = function() {
         var word = words[i];
         if(word.indexOf("#") == 0) {
             var link = document.createElement('a');
-            link.addEventListener("click", function(e) {
-                twitter.hashlist.showHash(this.innerHTML);
-            });
+            this.initClickHandler(link);
             link.innerHTML = word;
             link.href = "javascript:void(0);"
             node.appendChild(link);
@@ -37,6 +35,12 @@ Tweet.prototype.getTweetTextNode = function() {
     }
     return node;
 };
+
+Tweet.prototype.initClickHandler = function(domelement) {
+    domelement.addEventListener("click", function(e) {
+        twitter.hashlist.showHash(this.innerHTML);
+    });
+}
 
 Tweet.prototype.getHashes = function() {
     if(this.hashes != null)
