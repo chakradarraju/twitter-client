@@ -9,10 +9,7 @@ function Hashlist() {
 }
 
 Hashlist.prototype.getHTMLNode = function() {
-    if(this.node != null)
-        return this.node;
-    this.node = this.createHTMLNode();
-    return this.node;
+    return (this.node || this.createHTMLNode());
 }
 
 Hashlist.prototype.registerHash = function(hash) {
@@ -28,6 +25,7 @@ Hashlist.prototype.createHTMLNode = function() {
     this.hashlistElement = document.createElement('ul');
     this.hashlistElement.id = "hashList";
     node.appendChild(this.hashlistElement);
+    this.node = node;
     return node;
 }
 

@@ -7,9 +7,7 @@ function User(userid) {
 }
 
 User.prototype.getHTMLNode = function() {
-    if(this.node != null)
-        return this.node;
-    return this.createHTMLNode();
+    return (this.node || this.createHTMLNode());
 };
 
 User.prototype.createHTMLNode = function() {

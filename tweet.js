@@ -6,9 +6,7 @@ function Tweet(tweet, user) {
 }
 
 Tweet.prototype.getHTMLNode = function() {
-    if(this.node != null)
-        return this.node;
-    return this.createHTMLNode();
+    return (this.node || this.createHTMLNode());
 };
 
 Tweet.prototype.createHTMLNode = function() {

@@ -12,6 +12,7 @@ Filter.prototype.tweetFilter = function(tweet) {
 }
 
 Filter.prototype.filter = function() {
+    Util.pubsub.publish("filtering",null);
     var tweets = twitter.tweetlist.getTweets();
     for(var i=0;i<tweets.length;i++) {
         var tweet = tweets[i];

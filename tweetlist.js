@@ -5,15 +5,12 @@ function Tweetlist() {
 }
 
 Tweetlist.prototype.getHTMLNode = function() {
-    if(this.node != null)
-        return this.node;
-    this.node = this.createHTMLNode();
-    return this.node;
-
+    return (this.node || this.createHTMLNode());
 }
 
 Tweetlist.prototype.createHTMLNode = function() {
     var node = document.createElement('ul');
+    this.node = node;
     return node;
 }
 

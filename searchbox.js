@@ -3,10 +3,7 @@ function SearchBox() {
 }
 
 SearchBox.prototype.getHTMLNode = function() {
-    if(this.node != null)
-        return this.node;
-    this.node = this.createHTMLNode();
-    return this.node;
+    return (this.node || this.createHTMLNode());
 }
 
 SearchBox.prototype.createHTMLNode = function() {
@@ -19,5 +16,6 @@ SearchBox.prototype.createHTMLNode = function() {
         inputElement.value = "";
         e.preventDefault();
     });
+    this.node = node;
     return node;
 }

@@ -3,14 +3,11 @@ function Hash(hash) {
     this.list = [];
     this.tweetCounter =null;
     this.node = this.getHTMLNode();
-    if(hash) // For every hash except for no constraint on hash
-        Util.connect(twitter.filter,"filter",this,"updateCounter");
+    Util.pubsub.subscribe("filtering",this.updateCounter,this);
 }
 
 Hash.prototype.getHTMLNode = function() {
-    if(this.node != null)
-        return this.node;
-    return this.createHTMLNode();
+    return (this.node || this.createHTMLNode());
 }
 
 Hash.prototype.createHTMLNode = function() {
