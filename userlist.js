@@ -8,7 +8,7 @@ Userlist.prototype.getHTMLNode = function() {
 };
 
 Userlist.prototype.createHTMLNode = function() {
-    return document.createElement('div');
+    return document.createElement('ul');
 };
 
 Userlist.prototype.addNewUser = function(userid) {

@@ -4,6 +4,8 @@
 }
 .tweet.active {
     display: block;
+    border-left: 2px dashed white;
+    padding: 10px;
 }
 #twitter.userlist li.active {
     color: black;
@@ -16,20 +18,18 @@ ul {
     margin: 0;
     padding: 0;
 }
-#hashContainer ul {
-    display: none;
-}
-#hashContainer:hover ul {
-    display: block;
-}
-#hashList {
-    margin: 0px;
-    background: rgba(255,255,255,0.9);
-    position: absolute;
-}
 .hash.active {
-    display: list-item;
+    display: inline;
+    margin: 0px 5px;
 }
 .hash {
     display: none;
+}
+body {
+    background: black;
+    color: white;
+}
+a {
+    color: orange;
+    text-decoration: none;
 }

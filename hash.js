@@ -18,6 +18,7 @@ Hash.prototype.createHTMLNode = function() {
         link.innerHTML = "All";
     else
         link.innerHTML = this.hash;
+    link.href = "javascript:void(0);";
     this.tweetCounter = document.createElement('span');
     this.tweetCounter.innerHTML = this.list.length;
     node.appendChild(link);
@@ -52,10 +53,10 @@ Hash.prototype.updateCounter = function() {
     for(var i=0;i<this.list.length;i++)
         if(twitter.filter.tweetFilter(this.list[i]))
             count++;
-    if(count > 0) {
+    this.tweetCounter.innerHTML = count;
+    if(count > 0 || this.hash == null)
         this.show();
-        this.tweetCounter.innerHTML = count;
-    } else
+    else
         this.hide();
 }
 

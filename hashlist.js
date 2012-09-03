@@ -19,11 +19,10 @@ Hashlist.prototype.registerHash = function(hash) {
 
 Hashlist.prototype.createHTMLNode = function() {
     var node = document.createElement('a');
-    this.selectedHashElement = document.createElement('div');
+    this.selectedHashElement = document.createElement('span');
     this.selectedHashElement.innerHTML = "Choose a hashtag";
     node.appendChild(this.selectedHashElement);
     this.hashlistElement = document.createElement('ul');
-    this.hashlistElement.id = "hashList";
     node.appendChild(this.hashlistElement);
     this.node = node;
     return node;
