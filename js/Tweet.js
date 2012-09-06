@@ -1,13 +1,10 @@
-define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util) {
-    return dojo.declare("Tweet", twitterObject, {
-        hashes: null,
-        tweetData: null,
-        user: null,
-        display: true,
+define(["dojo","js/twiclientBase","js/util"], function(dojo, twiclientBase, util) {
+    return dojo.declare(twiclientBase, {
 
-        constructor: function(tweet, user) {
+        constructor: function(tweet) {
             this.tweetData = tweet;
-            this.user = user;
+            this.display = true;
+            this.hashes = null;
         },
 
         createHTMLNode: function() {
@@ -39,7 +36,6 @@ define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util
 
         hashClickHandler: function() {
             util.pubsub.publish("hashChange",this.hash);
-            //hashlist.showHash(this.hash);
         },
 
         getHashes: function() {
@@ -60,15 +56,19 @@ define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util
         },
 
         tweetInfo: function() {
-            return "Tweet by: "+this.user.userid+" Tweeted at: "+this.tweetData.created_at.substr(0,19);
+            return "Tweet by: "+this.getUserId()+" Tweeted at: "+this.tweetData.created_at.substr(0,19);
         },
 
         show: function() {
+            if(this.display)
+                return;
             this.display = true;
             this.node.className = "tweet active";
         },
 
         hide: function() {
+            if(!this.display)
+                return;
             this.display = false;
             this.node.className = "tweet";
         },
@@ -87,5 +87,9 @@ define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util
         createdAt: function() {
             return new Date(this.tweetData.created_at);
         },
+
+        getUserId: function() {
+            return this.tweetData.user.screen_name;
+        }
     });
 });

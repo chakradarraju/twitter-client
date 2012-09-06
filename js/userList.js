@@ -1,5 +1,5 @@
-define(["dojo","js/twitterObject","js/user"], function(dojo,twitterObject,User) {
-    var userList = new twitterObject();
+define(["dojo","js/twiclientBase","js/User","js/util"], function(dojo,twiclientBase,User,util) {
+    var userList = new twiclientBase();
     userList.users = {};
     userList.createHTMLNode = function() {
         return document.createElement('ul');
@@ -22,6 +22,7 @@ define(["dojo","js/twitterObject","js/user"], function(dojo,twitterObject,User) 
     userList.getUser = function(userid) {
         return userList.users[userid];
     };
+
 
     return userList;
 });

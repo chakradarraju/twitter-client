@@ -1,9 +1,5 @@
-define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util) {
-    return dojo.declare("User", twitterObject,{
-        display: true,
-        checkbox: null,
-        tweets: null,
-        userid: null,
+define(["dojo","js/twiclientBase","js/util"], function(dojo, twiclientBase, util) {
+    return dojo.declare(twiclientBase,{
 
         createHTMLNode: function() {
             var node = document.createElement('li');
@@ -20,8 +16,9 @@ define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util
         },
 
         constructor: function(userid) {
+            this.display = true;
+            this.checkbox = null;
             this.userid = userid;
-            this.tweets = [];
         },
 
         checkboxClick: function() {
@@ -31,13 +28,13 @@ define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util
         show: function() {
             this.display = true;
             this.node.className = "active";
-            util.pubsub.publish("showingUser",this);
+            util.pubsub.publish("showingUser",this.userid);
         },
 
         hide: function() {
             this.display = false;
             this.node.className = "";
-            util.pubsub.publish("hidingUser",this);
+            util.pubsub.publish("hidingUser",this.userid);
         },
 
         fetchTweets: function() {
@@ -48,13 +45,5 @@ define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util
             util.pubsub.publish("newTweetsReceived",JSON.parse(data));
             this.node.removeChild(this.node.lastChild); // Removing (Fetching tweets...)
         },
-
-        putTweet: function(tweet) {
-            this.tweets.push(tweet);
-        },
-
-        getTweets: function() {
-            return this.tweets;
-        }
     });
 });

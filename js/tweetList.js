@@ -1,5 +1,5 @@
-define(["dojo","js/twitterObject","js/tweet","js/util","js/userList"], function(dojo, twitterObject, Tweet, util, userList) {
-    var tweetList = new twitterObject();
+define(["dojo","js/twiclientBase","js/Tweet","js/util"], function(dojo, twiclientBase, Tweet, util) {
+    var tweetList = new twiclientBase();
     tweetList.tweets = [];
 
     tweetList.createHTMLNode = function() {
@@ -10,11 +10,10 @@ define(["dojo","js/twitterObject","js/tweet","js/util","js/userList"], function(
         if(tweets.length == 0) {
             alert("User doesn't have any tweets");
         }
-        var userid = tweets[0].user.screen_name;
-        var user = userList.getUser(userid);
+        var userTweetList = [];
         for(var i=0;i<tweets.length;i++)
-            user.putTweet(new Tweet(tweets[i],user));
-        tweetList.addTweets(user.getTweets());
+            userTweetList.push(new Tweet(tweets[i]));
+        tweetList.addTweets(userTweetList);
     };
 
     tweetList.addTweet = function(tweet) {
@@ -34,18 +33,18 @@ define(["dojo","js/twitterObject","js/tweet","js/util","js/userList"], function(
             tweetList.node.insertBefore(tweet.getHTMLNode(),tweetList.tweets[lo].getHTMLNode());
             tweetList.tweets.splice(lo,0,tweet);
         }
+        util.pubsub.publish("newTweetAdded",tweet);
     };
 
     tweetList.addTweets = function(tweets) {
         for(var i=0;i<tweets.length;i++)
             tweetList.addTweet(tweets[i]);
+        util.pubsub.publish("newTweetsAdded",tweets);
     };
 
     tweetList.getTweets = function() {
         return tweetList.tweets;
     };
-
-    util.pubsub.subscribe("newTweetsReceived",tweetList.receiveTweets,tweetList);
 
     return tweetList;
 });

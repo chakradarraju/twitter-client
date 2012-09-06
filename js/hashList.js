@@ -1,8 +1,7 @@
-define(["dojo","js/twitterObject","js/tweetList","js/hash","js/util"], function(dojo, twitterObject, tweetList, Hash, util) {
-    var hashList = new twitterObject();
+define(["dojo","js/twiclientBase","js/Hash","js/util"], function(dojo, twiclientBase, Hash, util) {
+    var hashList = new twiclientBase();
     hashList.hashes = {};
     hashList.hashListElement = null;
-    hashList.selectedHash = null;
     hashList.selectedHashElement = null;
 
     hashList.createHTMLNode = function() {
@@ -44,7 +43,6 @@ define(["dojo","js/twitterObject","js/tweetList","js/hash","js/util"], function(
             hashList.selectedHashElement.innerHTML = "Choose a hashtag";
         else
             hashList.selectedHashElement.innerHTML = hash;
-        hashList.selectedHash = hash;
     };
 
     hashList.getTweets = function(hash) {
@@ -52,8 +50,6 @@ define(["dojo","js/twitterObject","js/tweetList","js/hash","js/util"], function(
     };
 
     hashList.registerHash(null);
-    util.connect(tweetList,"addTweet",hashList,"registerTweet");
-    util.pubsub.subscribe("hashChange",hashList.showHash,hashList);
 
     return hashList;
 });

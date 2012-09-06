@@ -1,5 +1,5 @@
-define(["dojo","js/twitterObject","js/userList","js/util"], function(dojo,twitterObject,userList,util) {
-    var userAddBox = new twitterObject();
+define(["dojo","js/twiclientBase","js/util"], function(dojo, twiclientBase, util) {
+    var userAddBox = new twiclientBase();
 
     userAddBox.inputElement = null;
 
@@ -13,7 +13,7 @@ define(["dojo","js/twitterObject","js/userList","js/util"], function(dojo,twitte
     };
 
     userAddBox.submitHandler = function(e) {
-        userList.addNewUser(userAddBox.inputElement.value);
+        util.pubsub.publish("addingNewUser",userAddBox.inputElement.value);
         userAddBox.inputElement.value = "";
         e.preventDefault();
     };

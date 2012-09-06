@@ -1,5 +1,5 @@
-define(["dojo","js/twitterObject","js/util"], function(dojo, twitterObject, util) {
-    return dojo.declare("Hash", twitterObject, {
+define(["dojo","js/twiclientBase","js/util"], function(dojo, twiclientBase, util) {
+    return dojo.declare(twiclientBase, {
         hash: null,
         tweets: null,
         tweetCounter: null,
