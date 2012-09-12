@@ -3,10 +3,8 @@ define([], function() {
         filter: function(tweets,selectedUsers,selectedHash) {
             for(var i=0;i<tweets.length;i++) {
                 var tweet = tweets[i], userid = tweet.getUserId();
-                if((typeof selectedUsers[userid] == "undefined" || selectedUsers[userid]) && (!selectedHash || tweet.containsHash(selectedHash)))
-                    tweet.show();
-                else
-                    tweet.hide();
+                ((typeof selectedUsers[userid] == "undefined" || selectedUsers[userid]) && (!selectedHash || tweet.containsHash(selectedHash)))
+                    ? tweet.show() : tweet.hide();
             }
         },
 
