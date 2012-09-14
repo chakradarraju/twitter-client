@@ -1,6 +1,6 @@
 dojo.provide("js.Util");
 
-dojo.declare("js.Util", [], (function() {
+js.Util = (function() {
     var ajax = function(url, object, callback, method, caller) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -64,4 +64,4 @@ dojo.declare("js.Util", [], (function() {
             alert(message);
         }
     };
-})());
+})();

@@ -1,5 +1,5 @@
 dojo.require("js.Util");
-var util = new js.Util();
+var util = js.Util;
 dojo.require("js.UserAddBox");
 dojo.require("js.UserList");
 dojo.require("js.TweetList");
@@ -13,11 +13,10 @@ dojo.ready(function() {
     tweetList = dijit.byNode(dojo.byId("tweetListContainer"));
     hashList = dijit.byNode(dojo.byId("hashContainer"));
 
-    var filter = new js.filter();
     var selectedUsers = {}, selectedHash = null;
 
     var runFilter = function() {
-        filter.filter(tweetList.getTweets(),selectedUsers,selectedHash);
+        js.filter(tweetList.getTweets(),selectedUsers,selectedHash);
         util.pubsub.publish("filtered",null);
     }
     util.pubsub.subscribe("newTweetsAdded",runFilter,this);
