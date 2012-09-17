@@ -6,20 +6,6 @@ dojo.declare("js.User", [dijit._Widget, dijit._Templated], {
     widgetsInTemplate: true,
     templateString: dojo.cache("templates", "User.html"),
 
-    createHTMLNode: function() {
-        var node = document.createElement('li');
-        var checkbox = document.createElement('input');
-        util.initClickHandler(checkbox,this.checkboxClick,this);
-        checkbox.type = "checkbox";
-        checkbox.checked = true;
-        node.className = " active";
-        node.appendChild(checkbox);
-        node.appendChild(document.createTextNode(this.userid));
-        node.appendChild(document.createTextNode(" (Fetching tweets...)"));
-        this.checkbox = checkbox;
-        return node;
-    },
-
     constructor: function(user) {
         this.display = true;
         this.checkbox = null;
